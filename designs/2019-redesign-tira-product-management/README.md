@@ -110,7 +110,7 @@ const productsMap = new Map();
 
 productsMap.set(opRepDefinition.metadata.type, opRepDefinition);
 ```
-Note: This step can be generated automatically using babel-plugin-macros
+__Note:__ This step can be automated using babel-plugin-macros
 
 ### Changes to the workflow
 
