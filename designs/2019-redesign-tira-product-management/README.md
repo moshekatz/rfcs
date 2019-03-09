@@ -1,3 +1,5 @@
+# WIP
+
 - Start Date: 2019-03-06
 - RFC PR: (leave this empty, to be filled in later)
 - Author: Moshe Katz
@@ -48,14 +50,13 @@ export default { metadata, mount, unmount, onenter, onleave }
 ```
 
 ##### `metadata`
-
 An object that includes the following: 
 1. __name__ : string - the products name
 2. __type__ : subdp - the product type, generated from tira's subdp sequence
 3. __displayName__ : string - a single display name
 
-e.g: 
 ```js
+// OpRep example
 const metadata = {
     name: 'דיווח מבצעי',
     type: 710022
@@ -63,8 +64,57 @@ const metadata = {
 }
 ```
 
+##### `mount({container, id})`
+A function that accept a DOM node (container) and id,
+and mounts the component to the DOM. 
+
+```js
+// React example
+function mount({container, id}) {
+    ReactDOM.render(<ReportView reportId={id} />, container);
+}
+
+// Native DOM API example
+function mount({container, id}) {
+    const button = document.createElement('button');
+    button.textContent = `ahalan ${id}`;
+    container.appendChild(button);
+}
+```
+
+##### `unmount({container})`
+A function that accept a DOM node (container),
+and perform a clean up before final removal of the container from the DOM. 
+
+```js
+// React example
+function unmount({container}) {
+    // Remove a mounted React component from the DOM 
+    // and clean up its event handlers and state. 
+    ReactDOM.unmountComponentAtNode(container);
+}
+```
+
+##### `onEnter()` - open question
+A function that will get called when entering the product.
+
+##### `onLeave()` - open question
+A function that will get called when leaving the product.
+
+#### 3. Add a mapping inside `products-map.ts`
+
+```js
+import opRepDefinition from "./OpRep/oprep-definition";
+
+const productsMap = new Map();
+
+productsMap.set(opRepDefinition.metadata.type, opRepDefinition);
+```
+Note: This step can be generated automatically using babel-plugin-macros
 
 ### Changes to the workflow
+
+### Changes to the core logic
 
 
 ## Documentation
