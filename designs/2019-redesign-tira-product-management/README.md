@@ -6,14 +6,14 @@
 
 ## Summary
 
-This change would introduce a new way for developing products in Tira.
+This change would introduce a new way to develop products in Tira.
 The proposal would simplify creating, modifying and maintaining products in Tira, resulting in a better developer experience and better products.
 It would also offer new layouts that weren't possible with the current implementation (goodbye splitter).
 
 The goals of this proposal are:
 * Offer developers a better way to create a Tira product.
 * Allow developers to design their product independently.
-* Reduce maintenance complexity by redesigning the abstraction layer with emphasis on simplicity.
+* Reduce the maintenance complexity of the abstraction layer.
 
 ## Motivation
 
