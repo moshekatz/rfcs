@@ -23,7 +23,7 @@ Currently, managing products in Tira comes with a lot overhead for developers, b
 
 * You have to create a project in the server and override a lot of methods, sometimes in a naive way just for the compiler to be happy.
 * You have to create a bunch of insert statements without knowing what you gain in return.
-* While creating a view from the available templates is quick, it introduce a trade off, and changing the view's logic or replace it becomes non trivial.
+* While creating a view from the available templates is quick, it introduce a trade off, and changing the view becomes non trivial.
 * Encourages bad practices so that the code you write is very hard to reuse outside the context of Tira's infrastructure.
 
 This leads to several problems:
@@ -34,9 +34,8 @@ This leads to several problems:
 
 ## Detailed Design
 
-codesandbox example: https://codesandbox.io/s/1v87rqvxp3
-
 ### Creating a product
+As a consumer, this is the only section you have to understand in order to be productive.
 
 #### 1. Create a product directory
 Create a directory with your product name under `src/products/{your-product-name}`.
@@ -48,7 +47,6 @@ A product definition is an object that includes all the necessary information of
 Inside your product's directory, create a file named `{your-product-name}-definition.ts` and export as default the following object:
 
 ```js
-// TODO: add a type definition
 export default { metadata, mount, unmount }
 ```
 
@@ -56,19 +54,22 @@ export default { metadata, mount, unmount }
 An object that includes the following: 
 1. __name__ : string - the products name
 2. __type__ : subdp - the product type, generated from tira's subdp sequence
-3. __displayName__ : string - a single display name
+3. __displays__ : display[] - an array of displays. each display includes an id and a name.
 
 ```js
 // OpRep example
 const metadata = {
     name: 'דיווח מבצעי',
     type: 710022
-    displayName: 'דיווחים' 
+    displays: [{id: 1, name: 'דיווחים'}]
 }
 ```
 
+##### Why Tira subdp as a type?
+It will reduce the cost of integrating with Tira's current infra, and will help with our "no big rewrites" strategy.
+
 ##### `mount({container, id})`
-A function that accept a DOM node (container) and id,
+A function that accept a DOM node (container) and an id,
 and mounts the component to the DOM. 
 
 ```js
@@ -92,13 +93,11 @@ and perform a clean up before final removal of the container from the DOM.
 ```js
 // React example
 function unmount({container}) {
-    // Remove a mounted React component from the DOM 
-    // and clean up its event handlers and state. 
     ReactDOM.unmountComponentAtNode(container);
 }
 ```
 
-#### 3. Add a mapping inside `products-map.ts`
+#### 3. Add a mapping inside `src/products/products-map.ts`
 
 ```js
 // 1. Import your product definition
@@ -111,11 +110,11 @@ productsMap.set(opRepDefinition.metadata.type, opRepDefinition);
 ```
 __Note:__ This step can be automated using babel-plugin-macros
 
-##### Why by type?
+##### Why mapping by type?
 In order to support products that renders different content for each id (e.g - spotfire, tati..).
 This is also the reason we pass the "id" as a param to mount.
 
-### Changes to the workflow
+### Changes to the flow
 
 ##### Current
 user action -> Tira's action service -> nav action -> workstate mutation -> pray to god 
@@ -127,10 +126,11 @@ user action -> Tira's action service -> dispatch nav action -> reduce new state 
 user action -> dispatch nav action -> reduce new state with a pure function -> derive the display from the new state
 
 ### Changes to the core logic
+Codesandbox example: https://codesandbox.io/s/1v87rqvxp3
 
+### Map Integration
 
-TBD
-
+### Serialization Integration
 
 ## Documentation
 
@@ -164,6 +164,9 @@ More info can be found here: https://redux.js.org/recipes/structuring-reducers/n
 ##### Using `immer` for the reducer?
 Immer helps write immutable functions with regular readable syntax.
 More info about immer can be found here: https://hackernoon.com/introducing-immer-immutability-the-easy-way-9d73d8f71cb3
+
+##### `api` folder or seperated folders?
+
 
 ## Related Discussions
 
