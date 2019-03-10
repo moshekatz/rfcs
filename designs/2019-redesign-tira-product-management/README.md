@@ -34,10 +34,13 @@ This leads to several problems:
 
 ## Detailed Design
 
-### Creating new product
+codesandbox example: https://codesandbox.io/s/1v87rqvxp3
+
+### Creating a product
 
 #### 1. Create a product directory
 Create a directory with your product name under `src/products/{your-product-name}`.
+All of your product logic should be placed here as a .
 
 #### 2. Create a `productDefinition`
 
@@ -114,44 +117,33 @@ __Note:__ This step can be automated using babel-plugin-macros
 
 ### Changes to the workflow
 
+TBD
+
 ### Changes to the core logic
+
+TBD
 
 
 ## Documentation
 
-This change would effectively remove the distinction between "local" and "global" ESLint installations, because the location of the ESLint package would no longer be relevant. As a result, we would need to update the documentation that describes the distinction between local and global installations, and more generally modify the parts of the documentation that describe config loading to ensure that they were up to date.
-
-Our existing advice for config/plugin authors regarding dependencies (namely, that parsers and configs can be dependencies, while plugins must be peerDependencies) would remain the same.
-
-We would also need to update the `generator-eslint` boilerplate for plugins to avoid generating a readme file that describes a distinction between local and global installations.
+TBD
 
 ## Drawbacks
 
-* A lot of existing documentation says that global ESLint installations require global plugin installations. (This includes README files in third-party plugins which we're unable to modify.) As a result, this change could temporarily cause confusion for new users who choose to use global installations.
-* This change is backwards-incompatible for end users who use global plugin installations or home-directory configs, which could cause some migration pain. (However, the change is compatible with existing shareable configs and plugins, so end users would be able to migrate without waiting for a third party to migrate.)
-* This change does not allow shareable configs to manage their own plugins, as proposed in [RFC #5](https://github.com/eslint/rfcs/pull/5). However, it is intended to be compatible with future solutions to that problem.
+TBD
 
 ## Backwards Compatibility Analysis
 
-* This change has no compatibility impact on shareable configs and plugins. Shareable configs already specify plugins as `peerDependencies`, implying that the plugins must be installed and loadable by the end user. This change simply updates ESLint to use that guarantee.
-* This is a breaking change for end users who use global ESLint installations and global plugin installations; the plugins must now be installed locally.
-* This is a breaking change for end users who use home-directory configs along with shareable configs or custom parsers; the shareable configs/parsers must be resolvable from the location of the home-directory config.
-* This is a breaking change for integration authors who depend on `Linter` loading custom parsers from the filesystem. These integration authors could explicitly use `Linter#defineParser` instead. (Most integration authors who need access to the filesystem are using `CLIEngine` anyway.)
+TBD
 
 ## Alternatives
 
-* Along with configs/parsers, ESLint could load plugins relative to the configs that depend on them. That would introduce the possibility of having two plugins with the same name, requiring a disambiguation mechanism for configuring that plugin's resources; see [RFC #5](https://github.com/eslint/rfcs/pull/5) for an example. This RFC is intended to be a simpler step to solve some problems, while allowing additional work to proceed on that problem if desirable.
-* To mitigate some compatibility impact, ESLint could fall back to the existing behavior when it fails to load a package using the new behavior, instead of throwing a fatal error. However, this would likely cause more confusion because users wouldn't understand why ESLint was finding their packages in certain cases, which would make it more difficult to debug problems. This fallback is only provided for the `espree` package (which falls back to the default parser if no user-installed version of the pacakge is found).
+TBD
 
 ## Open Questions
 
-* This proposal uses the CWD as the "project root" from which plugins are loaded. Are there other folders that would serve this purpose better (e.g. in cases where the `--config` flag is used to load a config from a separate project)?
+TBD
 
 ## Related Discussions
 
-* [eslint/eslint#10125](https://github.com/eslint/eslint/issues/10125)
-* [eslint/rfcs#5](https://github.com/eslint/rfcs/pull/5)
-* [eslint/eslint#3458](https://github.com/eslint/eslint/issues/3458)
-* [eslint/eslint#6732](https://github.com/eslint/eslint/issues/6732)
-* [eslint/eslint#9897](https://github.com/eslint/eslint/issues/9897)
-* [eslint/eslint#10643](https://github.com/eslint/eslint/issues/10643)
+TBD
