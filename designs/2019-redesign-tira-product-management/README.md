@@ -40,7 +40,7 @@ codesandbox example: https://codesandbox.io/s/1v87rqvxp3
 
 #### 1. Create a product directory
 Create a directory with your product name under `src/products/{your-product-name}`.
-All of your product logic should be placed here as a .
+All of your product logic should be placed here as a convention.
 
 #### 2. Create a `productDefinition`
 
@@ -49,7 +49,7 @@ Inside your product's directory, create a file named `{your-product-name}-defini
 
 ```js
 // TODO: add a type definition
-export default { metadata, mount, unmount, onenter, onleave }
+export default { metadata, mount, unmount }
 ```
 
 ##### `metadata`
@@ -98,28 +98,36 @@ function unmount({container}) {
 }
 ```
 
-##### `onEnter()` - open question
-A function that will get called when entering the product.
-
-##### `onLeave()` - open question
-A function that will get called when leaving the product.
-
 #### 3. Add a mapping inside `products-map.ts`
 
 ```js
-import opRepDefinition from "./OpRep/oprep-definition";
+// 1. Import your product definition
+import opRepDefinition from "./OpRep/oprep-definition"; 
 
 const productsMap = new Map();
 
+// 2. Map between the product type and definition
 productsMap.set(opRepDefinition.metadata.type, opRepDefinition);
 ```
 __Note:__ This step can be automated using babel-plugin-macros
 
+##### Why by type?
+In order to support products that renders different content for each id (e.g - spotfire, tati..).
+This is also the reason we pass the "id" as a param to mount.
+
 ### Changes to the workflow
 
-TBD
+##### Current
+user action -> Tira's action service -> nav action -> workstate mutation -> pray to god 
+
+##### After The Proposal
+user action -> Tira's action service -> dispatch nav action -> reduce new state with a pure function -> derive the display from the new state
+
+##### End Game (removing Tira's action service)
+user action -> dispatch nav action -> reduce new state with a pure function -> derive the display from the new state
 
 ### Changes to the core logic
+
 
 TBD
 
@@ -138,11 +146,24 @@ TBD
 
 ## Alternatives
 
-TBD
+#### Full blown micro front ends
+1. Adding complexity for no
 
 ## Open Questions
 
-TBD
+##### Support for `onEnter()` as part of the product definition?
+A function that will get called when entering the product.
+
+##### Support for `onLeave()` as part of the product definition?
+A function that will get called when leaving the product.
+
+##### Normalizing the state shape?
+The state isn't nested so this might be an overkill.
+More info can be found here: https://redux.js.org/recipes/structuring-reducers/normalizing-state-shape.
+
+##### Using `immer` for the reducer?
+Immer helps write immutable functions with regular readable syntax.
+More info about immer can be found here: https://hackernoon.com/introducing-immer-immutability-the-easy-way-9d73d8f71cb3
 
 ## Related Discussions
 
