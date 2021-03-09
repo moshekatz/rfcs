@@ -65,9 +65,9 @@ An object that includes the following:
 ```js
 // OpRep example
 const metadata = {
-    name: 'דיווח מבצעי',
+    name: 'Operational Reports',
     type: 710022
-    displays: [{id: 1, name: 'דיווחים'}]
+    displays: [{id: 1, name: 'reports'}]
 }
 ```
 
@@ -163,7 +163,7 @@ TBD
 
 #### Full blown micro front ends
 
-1. Adding complexity for no
+Adding complexity that wouldn't be very beneficial at the moment, and could relativily easily added in the future.
 
 ## Open Questions
 
@@ -184,10 +184,6 @@ More info can be found here: https://redux.js.org/recipes/structuring-reducers/n
 
 Immer helps write immutable functions with regular readable syntax.
 More info about immer can be found here: https://hackernoon.com/introducing-immer-immutability-the-easy-way-9d73d8f71cb3
-
-##### client side vs. server side permissions?
-
-##### `api` folder or seperated folders?
 
 ## Related Discussions
 
