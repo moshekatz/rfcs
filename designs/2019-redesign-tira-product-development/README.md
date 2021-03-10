@@ -4,6 +4,8 @@
 - RFC PR: (leave this empty, to be filled in later)
 - Author: Moshe Katz
 
+**Disclaimer** - Some of the used vocabulary (e.g - "product") might sound confusing in the context of this document, and that's reasonable as it's assuming knowledge of internal project concepts.
+
 # Redesign Tira's Product Development
 
 ## Summary
@@ -66,7 +68,7 @@ An object that includes the following:
 // OpRep example
 const metadata = {
     name: 'Operational Reports',
-    type: 710022
+    type: 710022,
     displays: [{id: 1, name: 'reports'}]
 }
 ```
@@ -135,7 +137,7 @@ This is also the reason we pass the "id" as a param to mount.
 
 ![Post Proposal Flow](images/post-proposal-flow.png?raw=true 'Post Proposal Flow')
 
-##### End Game
+##### End State
 
 ![End Game Flow](images/end-game-flow.png?raw=true 'End Game Flow')
 
