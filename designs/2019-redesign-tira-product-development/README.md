@@ -147,7 +147,11 @@ Codesandbox example: https://codesandbox.io/s/1v87rqvxp3
 
 ### Map Integration
 
+TBD
+
 ### Serialization Integration
+
+TBD
 
 ## Documentation
 
@@ -163,9 +167,9 @@ TBD
 
 ## Alternatives
 
-#### Full blown micro front ends
+#### Micro front ends
 
-Adding complexity that wouldn't be very beneficial at the moment, and could relativily easily added in the future.
+TBD
 
 ## Open Questions
 
